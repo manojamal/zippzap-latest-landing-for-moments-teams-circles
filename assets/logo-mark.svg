@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.38 32.00" fill="none" role="img" aria-label="ZippZap. Moments move people.">
+<defs>
+    <linearGradient id="zzBolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DD9F5D"/>
+      <stop offset="42%" stop-color="#D53460"/>
+      <stop offset="100%" stop-color="#5727CF"/>
+    </linearGradient>
+</defs>
+<g transform="translate(1.00 1.00) scale(0.9375)" fill="url(#zzBolt)"><path d="M15.15.4 1.9 16.35h8.9L4.55 31.6 23.7 14.2h-8.5L21.55.4h-6.4Z"/><path d="M32.35.4 19.1 16.35h8.9L21.75 31.6 40.9 14.2h-8.5L38.75.4h-6.4Z"/></g>
+</svg>

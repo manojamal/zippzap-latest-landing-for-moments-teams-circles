@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZippZap – Group love, delivered perfectly</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400;font-display:swap;src:url(assets/fonts/plus-jakarta-sans-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:500;font-display:swap;src:url(assets/fonts/plus-jakarta-sans-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:600;font-display:swap;src:url(assets/fonts/plus-jakarta-sans-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:700;font-display:swap;src:url(assets/fonts/plus-jakarta-sans-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:800;font-display:swap;src:url(assets/fonts/plus-jakarta-sans-latin-800-normal.woff2) format('woff2')}
+
+/* Layout: one centred column (max 1180px) of full-width bands. Hero = copy + a code-built TV (the film) with a phone
+   (collecting wishes) in front of it. Then steps on a line, six wish types, occasion cards, four plans, a navy closing
+   band with a QR code, and the footer. Colours, type and gradients follow the ZippZap B2C Brand Guidelines v1.0.
+   Light look only, by brand choice. */
+:root{
+  color-scheme:light;
+  --navy:#1F2328; --pink:#1F2328; --purple:#2F3540; --vpink:#57606A; --rich:#2F3540; --orange:#6B7280;
+  --soft:#F5F6F8; --white:#FFFFFF;
+  --ink:var(--navy); --muted:#4B5563; --faint:#6B7280; --line:#E5E7EB; --line-strong:#D1D5DB;
+  --tint-pink:#F1F2F4; --tint-purple:#EEF0F3; --tint-orange:#F3F4F6;
+  --grad:linear-gradient(90deg,#1F2328 0%,#2F3540 52%,#6B7280 100%);
+  --grad-2:linear-gradient(135deg,#57606A 0%,#2F3540 100%);
+  --font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --h1:clamp(2.35rem,1.5rem + 3.3vw,4rem);
+  --h2:clamp(2rem,1.6rem + 1.4vw,2.5rem);
+  --h3:clamp(1.125rem,1.05rem + .3vw,1.3rem);
+  --body:clamp(1rem,.96rem + .2vw,1.125rem);
+  --gut:max(clamp(16px,4vw,40px),env(safe-area-inset-left,0px));
+  --gut-r:max(clamp(16px,4vw,40px),env(safe-area-inset-right,0px));
+  --sec:clamp(56px,3rem + 4vw,112px);
+  --ps:12.6px;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+section[id]{scroll-margin-top:72px}
+body{margin:0;background:var(--white);color:var(--ink);font:400 var(--body)/1.5 var(--font);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--white)}
+img,svg{max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:3px solid var(--purple);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:var(--gut);padding-right:var(--gut-r)}
+.skip{position:absolute;left:-999px;top:8px;z-index:50;background:var(--navy);color:var(--white);padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:600}
+.skip:focus{left:16px}
+.icons{position:absolute;width:0;height:0;overflow:hidden}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font:600 1rem/1.2 var(--font);text-decoration:none;border:0;cursor:pointer;white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.btn-grad{background:var(--grad);color:var(--white);box-shadow:0 10px 24px rgba(31,35,40,.25)}
+.btn-grad:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(31,35,40,.32)}
+.btn-line{background:var(--white);color:var(--navy);border:1.5px solid var(--line-strong)}
+.btn-line:hover{border-color:var(--navy)}
+.btn svg{width:20px;height:20px;flex:0 0 auto}
+.btn-sm{min-height:44px;padding:0 18px;font-size:.9375rem}
+
+/* header */
+.head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(255,255,255,.94);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
+.head.small{border-bottom-color:var(--line);box-shadow:0 6px 20px rgba(31,35,40,.06)}
+.head > .wrap{display:flex;align-items:center;gap:18px;min-height:68px;transition:min-height .2s}
+.head.small > .wrap{min-height:58px}
+.logo{display:flex;align-items:center;flex:0 0 auto;min-height:44px}
+.logo img{height:42px;width:auto;display:block;transition:height .2s}
+.head.small .logo img{height:36px}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav a{padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:.9375rem;color:var(--navy);transition:background .15s,color .15s}
+.nav a:hover{background:var(--soft)}
+.nav a.on{background:var(--tint-pink);color:var(--pink)}
+.head .btn-sm{margin-left:8px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:22px;border:1.5px solid var(--line-strong);background:var(--white);color:var(--navy);align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+.menu-btn svg{width:22px;height:22px}
+.menu{border-top:1px solid var(--line);background:var(--white)}
+.menu .wrap{display:flex;flex-direction:column;gap:2px;padding-block:8px 18px}
+.menu a{padding:13px 4px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+.menu .btn{margin-top:14px;border-bottom:0}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--soft) 0%,var(--white) 82%)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);align-items:center;gap:clamp(28px,4.5vw,64px);padding-block:clamp(20px,.5rem + 2.6vw,56px) clamp(28px,1rem + 2.6vw,64px)}
+.hero-copy{display:flex;flex-direction:column;gap:20px;min-width:0}
+.tag{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 10px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-weight:600;font-size:.875rem}
+.tag i{width:10px;height:10px;border-radius:5px;background:var(--grad)}
+.hero h1{font-size:var(--h1);line-height:1.06;font-weight:700;letter-spacing:-.04em}
+.hero h1 span{color:var(--pink)}
+.lead{font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.6;color:var(--muted);max-width:31em}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;padding-top:4px}
+.fine{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.875rem;color:var(--faint)}
+.fine span{display:inline-flex;align-items:center;gap:7px}
+.fine svg{width:16px;height:16px;color:var(--pink)}
+
+/* hero picture: the film on a TV, the phone collecting wishes in front */
+.visual{position:relative;display:grid;min-width:0;padding-block:44px 58px}
+.visual > .tv,.visual > .phone{grid-area:1/1}
+.blob{position:absolute;border-radius:50%;z-index:0;pointer-events:none}
+.blob.b1{width:70%;aspect-ratio:1;background:radial-gradient(circle,rgba(31,35,40,.18),rgba(31,35,40,0) 68%);top:6%;left:-6%}
+.blob.b2{width:62%;aspect-ratio:1;background:radial-gradient(circle,rgba(31,35,40,.16),rgba(31,35,40,0) 66%);bottom:-4%;right:-6%}
+.tv{position:relative;z-index:1;justify-self:start;align-self:start;width:84%;margin-top:22px;font-size:calc(var(--ps) * .96)}
+.tv-screen{position:relative;aspect-ratio:16/9;border-radius:1em;border:.55em solid var(--navy);background:
+  radial-gradient(60% 80% at 85% 10%,rgba(31,35,40,.55),rgba(31,35,40,0) 70%),
+  radial-gradient(55% 70% at 70% 100%,rgba(221,159,93,.45),rgba(221,159,93,0) 70%),
+  linear-gradient(135deg,#2B3038 0%,#343A44 55%,#2F3540 100%);overflow:hidden;color:var(--white);padding:1.2em 1.35em;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 24px 50px rgba(31,35,40,.25)}
+.tv-top small{display:block;font-size:.72em;font-weight:700;letter-spacing:.14em;opacity:.8}
+.tv-top b{display:block;font-size:1.9em;line-height:1.05;font-weight:800;letter-spacing:-.03em;margin-top:.25em;max-width:7.2em}
+.tv-top span{display:block;font-size:.86em;opacity:.9;margin-top:.35em}
+.faces{display:flex;align-items:center}
+.faces > *{width:2.3em;height:2.3em;border-radius:50%;border:.16em solid #30353E;margin-left:-.55em;display:grid;place-items:center;font-size:1em;font-weight:800;color:var(--white);object-fit:cover}
+.faces > *:first-child{margin-left:0}
+.faces .f1{background:var(--grad-2)}.faces .f2{background:linear-gradient(135deg,#6B7280,#1F2328)}.faces .f3{background:linear-gradient(135deg,#2F3540,#57606A)}
+.faces .fm{background:var(--white);color:var(--purple);font-size:.8em;width:2.9em;height:2.9em}
+.scrub{display:flex;align-items:center;gap:.6em;font-size:.72em;font-weight:600}
+.scrub svg{width:1.4em;height:1.4em;flex:0 0 auto}
+.scrub .track{flex:1;height:.4em;border-radius:.2em;background:rgba(255,255,255,.25);overflow:hidden}
+.scrub .track i{display:block;height:100%;width:34%;background:var(--grad)}
+.tv-stand{width:24%;height:.9em;margin:0 auto;background:linear-gradient(var(--navy),#2D323B);border-radius:0 0 .5em .5em}
+
+.phone{position:relative;z-index:2;justify-self:end;align-self:start;margin-top:4.6em;font-size:var(--ps);width:19em;background:var(--navy);border-radius:2.9em;padding:.62em;box-shadow:0 30px 70px rgba(31,35,40,.30),0 6px 16px rgba(31,35,40,.14)}
+.screen{background:linear-gradient(180deg,#F7F8FA 0%,var(--white) 38%);border-radius:2.3em;padding:1.35em 1em 1.1em;display:flex;flex-direction:column;gap:.85em;overflow:hidden}
+.who{display:flex;align-items:center;gap:.7em}
+.who img{width:2.85em;height:2.85em;border-radius:50%;object-fit:cover;border:.16em solid var(--white);box-shadow:0 0 0 .13em var(--pink)}
+.who b{display:block;font-size:1em;line-height:1.2}
+.who small{display:block;font-size:.75em;color:var(--muted)}
+.count{display:flex;justify-content:space-between;align-items:center;font-size:.8em;font-weight:600}
+.count em{font-style:normal;color:var(--purple)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.44em}
+.t{position:relative;aspect-ratio:1/1.1;border-radius:.875em;padding:.45em;display:flex;flex-direction:column;justify-content:space-between;color:var(--white);overflow:hidden;animation:pop .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 80ms + 150ms)}
+.t svg{width:1.15em;height:1.15em}
+.t span{font-size:.69em;font-weight:700;line-height:1.15}
+.t.v1{background:linear-gradient(150deg,#1F2328,#2F3540)}
+.t.v2{background:linear-gradient(150deg,#2F3540,#2F3540)}
+.t.v3{background:linear-gradient(150deg,#6B7280,#1F2328)}
+.t.v4{background:linear-gradient(150deg,#1F2328,#2F3540)}
+.t.v5{background:linear-gradient(150deg,#57606A,#2F3540)}
+.t.note{background:#FFF1C9;color:var(--navy);transform:rotate(-2deg)}
+.t.note.n2{background:#E5E7EB;transform:rotate(2deg)}
+.t.note p{font-size:.72em;font-weight:700;line-height:1.25}
+.t.more{background:var(--soft);color:var(--purple);align-items:center;justify-content:center;font-size:1.1em;font-weight:800;border:.1em dashed var(--line-strong)}
+.wave{display:flex;align-items:center;gap:.13em;height:1.15em}
+.wave i{display:block;width:.19em;border-radius:.12em;background:rgba(255,255,255,.95)}
+.make{display:flex;flex-direction:column;gap:.45em;font-size:.75em;font-weight:600;color:var(--muted)}
+.make > div:first-child{display:flex;justify-content:space-between}
+.bar{height:.6em;border-radius:.3em;background:#ECEEF1;overflow:hidden}
+.bar i{display:block;height:100%;width:72%;border-radius:.3em;background:var(--grad);animation:fill 1.3s cubic-bezier(.3,.7,.2,1) .95s both}
+.reveal{display:flex;align-items:center;justify-content:center;gap:.5em;height:2.9em;border-radius:1.45em;background:var(--grad);color:var(--white);font-weight:700;font-size:.875em}
+.reveal svg{width:1.1em;height:1.1em}
+
+.chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;background:var(--white);border-radius:16px;padding:9px 14px 9px 9px;box-shadow:0 2px 6px rgba(31,35,40,.06),0 14px 32px rgba(31,35,40,.12);font-size:.8125rem;line-height:1.3;max-width:min(240px,64%);animation:pop .5s cubic-bezier(.2,.8,.2,1) both}
+.chip b{display:block;font-weight:700}
+.chip small{display:block;color:var(--faint);font-size:.75rem}
+.chip .ic{flex:0 0 auto;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:var(--white)}
+.chip .ic svg{width:18px;height:18px}
+.chip.c1{top:0;right:0;animation-delay:1.25s}
+.chip.c1 .ic{background:var(--grad-2)}
+.chip.c2{bottom:0;left:0;animation-delay:1.55s}
+.chip.c2 .ic{background:#0A7A55}
+.confetti i{position:absolute;display:block;z-index:0}
+.confetti .sq{width:12px;height:12px;border-radius:3px}
+.confetti .ci{width:10px;height:10px;border-radius:50%}
+.confetti .di{width:11px;height:11px;transform:rotate(45deg);border-radius:2px}
+.confetti .da{width:18px;height:5px;border-radius:3px}
+
+/* sections */
+.sec{padding-block:var(--sec)}
+.sec.soft{background:var(--soft)}
+.sec-head{display:flex;flex-direction:column;gap:10px;max-width:680px;margin-bottom:clamp(28px,1.5rem + 1.5vw,48px)}
+.sec-head h2{font-size:var(--h2);line-height:1.15;font-weight:600;letter-spacing:-.03em}
+.sec-head p{color:var(--muted);font-size:var(--body)}
+
+/* steps on a line */
+.steps{--g:clamp(20px,3vw,48px);list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--g)}
+.step{position:relative;display:flex;flex-direction:column;gap:10px}
+.step .dot{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.125rem;color:var(--navy);border:2px solid transparent;background:linear-gradient(var(--white),var(--white)) padding-box,var(--grad) border-box;margin-bottom:8px}
+.step:not(:last-child)::after{content:"";position:absolute;top:25px;left:64px;right:calc(-1 * var(--g) + 12px);height:2px;border-radius:1px;background:var(--grad);opacity:.45}
+.step h3,.feat h3{font-size:var(--h3);line-height:1.25;font-weight:600}
+.step p{color:var(--muted);line-height:1.6;max-width:24em}
+
+/* six wish types, no boxes */
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,3vw,44px) clamp(20px,3vw,48px)}
+.feat{display:grid;grid-template-columns:52px minmax(0,1fr);gap:4px 16px;align-items:start}
+.feat .ico{grid-row:span 2;width:52px;height:52px;border-radius:16px;background:var(--white);display:grid;place-items:center;box-shadow:0 1px 2px rgba(31,35,40,.05)}
+.feat .ico svg{width:26px;height:26px}
+.feat h3{padding-top:3px}
+.feat p{color:var(--muted);line-height:1.5}
+
+/* occasion cards */
+.occ{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+.oc{display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding:clamp(18px,1.8vw,24px);border-radius:22px;background:var(--tint-pink);font-weight:700;font-size:clamp(1rem,.95rem + .2vw,1.125rem);line-height:1.3}
+.oc:nth-child(4n+2){background:var(--tint-purple)}
+.oc:nth-child(4n+3){background:var(--tint-orange)}
+.oc:nth-child(4n){background:var(--soft)}
+.oc .oi{width:72px;height:72px;display:block;object-fit:contain;transition:transform .25s ease}
+.oc:hover .oi{transform:translateY(-3px) rotate(-4deg)}
+.oc.memory{background:var(--soft)}
+.oc.any{padding:0;background:var(--navy);color:#fff}
+.oc.any a{display:flex;flex-direction:column;justify-content:space-between;gap:16px;height:100%;width:100%;padding:clamp(18px,1.8vw,24px);border-radius:22px;color:#fff;text-decoration:none}
+.oc.any small{font-size:.9375rem;font-weight:600;color:#D1D5DB}
+.oc.any:hover small{text-decoration:underline;text-underline-offset:3px}
+.occ-toggle{display:none}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.4vw,20px);align-items:stretch}
+.plan{position:relative;display:flex;flex-direction:column;gap:14px;padding:clamp(22px,2vw,28px);border-radius:22px;background:var(--white);border:1.5px solid var(--line)}
+.plan.pop{border:2px solid transparent;background:linear-gradient(var(--white),var(--white)) padding-box,var(--grad) border-box;box-shadow:0 2px 6px rgba(31,35,40,.05),0 14px 34px rgba(31,35,40,.09)}
+.plan .badge{position:absolute;top:-13px;left:clamp(22px,2vw,28px);padding:5px 12px;border-radius:999px;background:var(--grad);color:var(--white);font-size:.75rem;font-weight:700;letter-spacing:.05em}
+.plan h3{font-size:var(--h3);font-weight:600}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price b{font-size:clamp(2rem,1.7rem + 1vw,2.5rem);font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums;line-height:1}
+.price span{color:var(--muted);font-weight:500;font-size:.9375rem}
+.plan .size{display:flex;align-items:center;gap:10px;font-weight:600}
+.plan .size svg{width:22px;height:22px;flex:0 0 auto}
+.plan p{color:var(--muted);line-height:1.5;flex:1;font-size:.9375rem}
+.plan .btn{width:100%}
+.under{margin-top:clamp(20px,2vw,28px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 28px;align-items:start}
+.includes{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:.9375rem}
+.includes span{display:inline-flex;align-items:center;gap:8px}
+.includes svg{width:18px;height:18px;color:#0A7A55}
+.pay{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-size:.9375rem;font-weight:600}
+.pay svg{width:20px;height:20px;flex:0 0 auto}
+.note-sm{grid-column:1/-1;font-size:.8125rem;color:var(--faint);line-height:1.55}
+
+/* closing band */
+.close{position:relative;overflow:hidden;background:var(--navy);color:var(--white)}
+.close .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:32px 48px;padding-block:clamp(56px,3rem + 3.5vw,100px)}
+.close-copy{display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.close h2{font-size:clamp(2rem,1.4rem + 2.6vw,3.25rem);line-height:1.1;font-weight:700;letter-spacing:-.035em;max-width:13em}
+.close h2 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.close p{font-size:var(--body);color:#DADDE2;max-width:34em}
+.close .fine{color:#BCC1C9}
+.close .fine svg{color:var(--orange)}
+.qr{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px 20px 16px;border-radius:24px;background:var(--white);color:var(--navy);width:212px}
+.qr-svg{width:172px;height:172px;display:block}
+.qr span{font-size:.8125rem;font-weight:600;text-align:center;line-height:1.35}
+
+/* footer */
+.foot{background:var(--soft);border-top:1px solid var(--line)}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:28px;padding-block:52px 28px}
+.foot .brand{display:flex;flex-direction:column;gap:14px}
+.foot .brand img{height:44px;width:auto;align-self:flex-start}
+.foot .brand p{color:var(--muted);max-width:22em}
+.foot h3{font-size:.8125rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.foot ul a{display:inline-block;padding:6px 0;text-decoration:none;font-weight:500}
+.foot ul a:hover{color:var(--pink)}
+.legal{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding-top:22px;border-top:1px solid var(--line-strong);font-size:.875rem;color:var(--faint)}
+
+/* download bar on phones and tablets */
+.getbar{position:fixed;z-index:40;left:0;right:0;bottom:0;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(31,35,40,.08);display:none;align-items:center;gap:12px;transform:translateY(110%);visibility:hidden;transition:transform .25s ease,visibility .25s}
+.getbar.show{transform:none;visibility:visible}
+.getbar img{width:30px;height:auto;flex:0 0 auto}
+.getbar span{flex:1;min-width:0;font-size:.875rem;line-height:1.3}
+.getbar span b{display:block;font-size:.9375rem}
+.getbar .btn{min-height:44px;padding:0 18px;font-size:.9375rem}
+
+@keyframes pop{from{transform:scale(.7);opacity:.15}}
+@keyframes fill{from{width:0}}
+
+/* responsive */
+@media (max-width:1100px){
+  .nav a{padding:10px 10px}
+  .plans{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  :root{--ps:13px}
+  .nav{display:none}
+  .head .btn-sm{margin-left:auto}
+  .menu-btn{display:inline-flex}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .visual{max-width:540px;width:100%;margin-inline:auto}
+  .feats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .occ{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .getbar{display:flex}
+  .foot .wrap{grid-template-columns:repeat(3,minmax(0,1fr));padding-bottom:96px}
+  .foot .brand{grid-column:1/-1}
+  .under{grid-template-columns:minmax(0,1fr)}
+  .pay{justify-self:start}
+}
+@media (min-width:961px){ .menu{display:none!important} }
+@media (max-width:760px){
+  .close .wrap{grid-template-columns:minmax(0,1fr)}
+  .qr{display:none}
+  .close .confetti{display:none}
+  .occ{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .occ.clip>li:nth-child(n+9){display:none}
+  .oc .oi{width:60px;height:60px}
+  .occ-toggle{display:flex;width:100%;margin-top:16px}
+}
+@media (max-width:640px){
+  :root{--ps:10.4px}
+  .steps{grid-template-columns:minmax(0,1fr);gap:28px}
+  .step{display:grid;grid-template-columns:52px minmax(0,1fr);gap:4px 16px}
+  .step .dot{grid-row:span 2;margin-bottom:0}
+  .step h3{padding-top:12px}
+  .step:not(:last-child)::after{top:60px;left:25px;right:auto;bottom:-24px;width:2px;height:auto}
+  .feats{grid-template-columns:minmax(0,1fr);gap:24px}
+  .plans{grid-template-columns:minmax(0,1fr)}
+  .ctas .btn{flex:1 1 100%}
+  .chip{padding:7px 10px 7px 7px;font-size:.75rem;gap:8px}
+  .chip small{font-size:.6875rem}
+  .chip .ic{width:28px;height:28px;border-radius:9px}
+  .chip .ic svg{width:15px;height:15px}
+  .visual{padding-block:40px 50px}
+  .foot .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logo img{height:38px}
+  .head.small .logo img{height:34px}
+}
+@media (max-width:380px){
+  :root{--ps:9.2px}
+  .head > .wrap{gap:10px}
+  .logo img{height:34px}
+  .head .btn-sm{padding:0 14px}
+  .getbar span{font-size:.8125rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .t,.chip,.bar i{animation:none}
+  .btn,.getbar,.head,.head > .wrap,.logo img{transition:none}
+  .oc .oi{transition:none}.oc:hover .oi{transform:none}
+}
+/* ---- ZippZap family: shared additions for the main page, Moments, Teams and Circles ---- */
+.fam{background:var(--navy);color:#FFFFFF;font-size:.8125rem;position:relative;z-index:31}
+.fam .wrap{display:flex;align-items:center;gap:2px;min-height:40px;overflow-x:auto;scrollbar-width:none}
+.fam .wrap::-webkit-scrollbar{display:none}
+.fam .lbl{white-space:nowrap;margin-right:10px;color:rgba(255,255,255,.7);font-weight:600}
+.fam a{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none;padding:5px 12px;min-height:32px;border-radius:999px;font-weight:600;color:rgba(255,255,255,.88)}
+.fam a:hover{color:#FFFFFF;background:rgba(255,255,255,.12)}
+.fam a[aria-current="page"]{background:#FFFFFF;color:var(--navy)}
+.fam i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.fam .m{background:#E0457A}.fam .tm{background:#4F86F7}.fam .ci{background:#22B07D}
+.fam .home{width:auto}
+.logo{gap:10px;text-decoration:none}
+.logo .sub{font-size:.875rem;font-weight:700;color:var(--pink);background:var(--tint-pink);padding:4px 10px;border-radius:999px;white-space:nowrap}
+.foot .wrap{grid-template-columns:minmax(0,1.3fr) repeat(4,minmax(0,1fr))}
+@media (max-width:960px){.foot .wrap{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.foot .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.logo .sub{display:none}}
+@media (max-width:640px){.fam .lbl{display:none}.fam a{padding:5px 10px}}
+@media (max-width:380px){.fam a{padding:5px 8px;gap:6px}}
+
+/* early access form in the closing band */
+.close .wrap.has-form{align-items:start}
+.form-card{background:#FFFFFF;color:var(--navy);border-radius:24px;padding:clamp(20px,2vw,28px);width:min(460px,100%);display:grid;gap:14px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.form-card h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+.form-card form{display:grid;gap:14px}
+.fld{display:grid;gap:6px;min-width:0}
+.fld label{font-size:.875rem;font-weight:600}
+.fld label small{font-weight:500;color:var(--faint)}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1rem;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line-strong);background:#FFFFFF;color:var(--navy);width:100%}
+.fld textarea{min-height:84px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:3px solid var(--tint-pink);outline-offset:0;border-color:var(--pink)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.form-card .btn{width:100%}
+.close .form-card .form-note{font-size:.8125rem;color:var(--faint);line-height:1.5}
+.close .form-card .form-done p{color:var(--muted)}
+.form-done{display:grid;gap:10px;justify-items:center;text-align:center;padding:18px 4px}
+.form-done .ok{width:56px;height:56px;border-radius:50%;background:#E7F6EE;color:#0A7A55;display:grid;place-items:center}
+.form-done .ok svg{width:28px;height:28px}
+.form-done p{color:var(--muted)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (max-width:640px){.row2{grid-template-columns:minmax(0,1fr)}}
+
+/* "for teams / for leaders" value list */
+.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
+.val{background:#FFFFFF;border:1.5px solid var(--line);border-radius:22px;padding:clamp(20px,2vw,28px);display:flex;flex-direction:column;gap:10px}
+.val h3{font-size:var(--h3);font-weight:600}
+.val p{color:var(--muted);line-height:1.55}
+.val .num{font-size:.8125rem;font-weight:800;letter-spacing:.08em;color:var(--pink)}
+.price-note{margin-top:clamp(18px,2vw,26px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 22px;border-radius:20px;background:#FFFFFF;border:1.5px dashed var(--line-strong)}
+.price-note p{color:var(--muted);max-width:44em}
+.price-note b{color:var(--navy)}
+@media (max-width:960px){.vals{grid-template-columns:minmax(0,1fr)}}
+/* ---- main page (ZippZap family) ---- */
+/* Neutral charcoal page. Pink, blue and green appear together as the family, or alone on the product they belong to. */
+:root{--family:linear-gradient(90deg,#D53460 0%,#1D4ED8 50%,#047857 100%);--family-lt:linear-gradient(90deg,#F27BA0 0%,#7FA8FF 50%,#4ADE9F 100%);--mom:linear-gradient(90deg,#D53460 0%,#A029A5 52%,#DD9F5D 100%);--grad:var(--family)}
+.btn-ink{background:#1F2328;color:#FFFFFF;box-shadow:0 10px 24px rgba(31,35,40,.2)}
+.btn-ink:hover{background:#000000;transform:translateY(-1px)}
+.btn-mom{background:var(--mom);color:#FFFFFF;box-shadow:0 10px 24px rgba(160,41,165,.22)}
+.btn-mom:hover{transform:translateY(-1px)}
+.close h2 span{background:var(--family-lt);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hub-hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--soft) 0%,#FFFFFF 86%)}
+.hub-hero .wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px;padding-block:clamp(36px,1.5rem + 3.5vw,84px) clamp(44px,1.5rem + 3.5vw,88px)}
+.hub-hero .tag{align-self:center}
+.hub-hero h1{font-size:var(--h1);line-height:1.06;font-weight:700;letter-spacing:-.04em;max-width:12em}
+.hub-hero h1 span{background:var(--family);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hub-hero .lead{max-width:34em}
+.icon-row{display:flex;justify-content:center;align-items:flex-end;gap:clamp(2px,1.2vw,14px);flex-wrap:nowrap;margin-bottom:4px}
+.icon-row img{width:clamp(44px,5.2vw,72px);height:auto;display:block;animation:pop .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 70ms + 100ms)}
+.icon-row img:nth-child(even){margin-bottom:10px}
+.ctas.center{justify-content:center}
+.sec-head.center{margin-inline:auto;text-align:center;align-items:center}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,24px)}
+.prod{--c:#D53460;--t:#FDECF2;display:flex;flex-direction:column;gap:14px;padding:clamp(22px,2.2vw,30px);border-radius:26px;background:var(--t);min-width:0}
+.prod.pt{--c:#1D4ED8;--t:#EAF1FE}
+.prod.pc{--c:#047857;--t:#E3F6EC}
+.ptop{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap}
+.pname{font-size:clamp(1.375rem,1.2rem + .6vw,1.75rem);font-weight:700;letter-spacing:-.02em;color:var(--navy)}
+.pname b{color:var(--c);font-weight:800}
+.pstat{font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:#FFFFFF;color:var(--c);white-space:nowrap}
+.pfor{font-weight:700;color:var(--navy);font-size:1.0625rem}
+.pdesc{color:var(--muted);line-height:1.55}
+.pics{display:flex;gap:10px}
+.pics img{width:64px;height:64px;padding:6px;border-radius:18px;background:#FFFFFF;display:block}
+.pl{list-style:none;margin:0;padding:0;display:grid;gap:9px;color:var(--navy)}
+.pl li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.pl svg{width:18px;height:18px;flex:0 0 auto;margin-top:3px;color:var(--c)}
+.pbtn{margin-top:auto;background:var(--c);color:#FFFFFF;width:100%}
+.prod.pm .pbtn{background:var(--mom);box-shadow:0 10px 24px rgba(160,41,165,.22)}
+.pbtn:hover{transform:translateY(-1px)}
+.pbtn svg{width:18px;height:18px}
+.close .choose{display:flex;flex-wrap:wrap;gap:12px}
+.btn-blue{background:#1D4ED8;color:#FFFFFF}
+.btn-green{background:#047857;color:#FFFFFF}
+.btn-blue:hover,.btn-green:hover{transform:translateY(-1px)}
+.close.hub .wrap{grid-template-columns:minmax(0,1fr)}
+.close.hub h2{max-width:none}
+.close.hub h2 span{display:block}
+@media (max-width:1060px){.products{grid-template-columns:minmax(0,1fr);max-width:640px;margin-inline:auto}}
+@media (max-width:640px){.close .choose .btn{flex:1 1 100%}.icon-row{gap:2px}}
+@media (prefers-reduced-motion:reduce){.icon-row img{animation:none}}
+
+</style>
+<meta name="description" content="Group gifting, digital greetings and milestone celebrations for individuals, teams and communities. One film from everyone who cares.">
+<meta name="theme-color" content="#1F2328">
+<link rel="canonical" href="https://zippzap.app/">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZippZap">
+<meta property="og:url" content="https://zippzap.app/">
+<meta property="og:title" content="ZippZap – Group love, delivered perfectly">
+<meta property="og:description" content="Group gifting, digital greetings and milestone celebrations for individuals, teams and communities. One film from everyone who cares.">
+<meta property="og:image" content="https://zippzap.app/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZippZap – Group love, delivered perfectly">
+<meta name="twitter:description" content="Group gifting, digital greetings and milestone celebrations for individuals, teams and communities. One film from everyone who cares.">
+<meta name="twitter:image" content="https://zippzap.app/assets/og-image.png">
+</head>
+<body>
+<svg class="icons" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D53460"/><stop offset=".5" stop-color="#1D4ED8"/><stop offset="1" stop-color="#047857"/></linearGradient>
+</defs></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="head" id="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="ZippZap, top of page"><img src="assets/logo.svg" alt="ZippZap. Moments move people." width="144" height="42"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="moments.html">Moments</a>
+      <a href="teams.html">Teams</a>
+      <a href="circles.html">Circles</a>
+      <a href="#includes">What's included</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <a class="btn btn-ink btn-sm" href="#products">Find yours</a>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="menu" id="menu" hidden>
+    <div class="wrap">
+      <a href="moments.html">ZippZap Moments – families and friends</a>
+      <a href="teams.html">ZippZap Teams – workplaces</a>
+      <a href="circles.html">ZippZap Circles – communities</a>
+      <a href="#includes">What's included</a>
+      <a href="#how">How it works</a>
+      <a class="btn btn-ink" href="#products">Find your ZippZap</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hub-hero" id="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="icon-row" aria-hidden="true">
+        <img src="assets/icons/birthday.webp" alt="" width="72" height="72" style="--i:0">
+        <img src="assets/icons/wedding.webp" alt="" width="72" height="72" style="--i:1">
+        <img src="assets/icons/work.webp" alt="" width="72" height="72" style="--i:2">
+        <img src="assets/icons/congratulations.webp" alt="" width="72" height="72" style="--i:3">
+        <img src="assets/icons/thank-you.webp" alt="" width="72" height="72" style="--i:4">
+        <img src="assets/icons/graduation.webp" alt="" width="72" height="72" style="--i:5">
+        <img src="assets/icons/new-baby.webp" alt="" width="72" height="72" style="--i:6">
+      </div>
+      <span class="tag"><i aria-hidden="true"></i>For families, workplaces and communities</span>
+      <h1 id="hero-h">Group love, <span>delivered perfectly.</span></h1>
+      <p class="lead">One film from everyone who cares. ZippZap collects video, voice, photo and written wishes and turns them into one surprise film, for families and friends, workplaces and communities.</p>
+      <div class="ctas center">
+        <a class="btn btn-ink" href="#products">Find your ZippZap</a>
+        <a class="btn btn-line" href="#how">See how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="products" aria-labelledby="prod-h">
+    <div class="wrap">
+      <div class="sec-head center"><h2 id="prod-h">Three ways to celebrate together</h2><p>The same simple idea: collect a wish from everyone, reveal one film.</p></div>
+      <div class="products">
+        <article class="prod pm">
+          <div class="ptop"><span class="pname">ZippZap <b>Moments</b></span><span class="pstat">Available now</span></div>
+          <p class="pfor">For families and friends</p>
+          <p class="pdesc">Birthdays, weddings, new babies and every family milestone, in one surprise film.</p>
+          <div class="pics" aria-hidden="true"><img src="assets/icons/birthday.webp" alt=""><img src="assets/icons/wedding.webp" alt=""><img src="assets/icons/new-baby.webp" alt=""></div>
+          <a class="btn pbtn" href="moments.html">Explore Moments<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="prod pt">
+          <div class="ptop"><span class="pname">ZippZap <b>Teams</b></span><span class="pstat">Early access</span></div>
+          <p class="pfor">For workplaces</p>
+          <p class="pdesc">Farewells, retirements, work anniversaries and team wins, from colleagues in every office.</p>
+          <div class="pics" aria-hidden="true"><img src="assets/icons/work.webp" alt=""><img src="assets/icons/farewell.webp" alt=""><img src="assets/icons/retirement.webp" alt=""></div>
+          <a class="btn pbtn" href="teams.html">Explore Teams<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="prod pc">
+          <div class="ptop"><span class="pname">ZippZap <b>Circles</b></span><span class="pstat">Early access</span></div>
+          <p class="pfor">For communities</p>
+          <p class="pdesc">Churches, cell groups, alumni, clubs and big families, with hundreds of members in one film.</p>
+          <div class="pics" aria-hidden="true"><img src="assets/icons/thank-you.webp" alt=""><img src="assets/icons/anniversary.webp" alt=""><img src="assets/icons/graduation.webp" alt=""></div>
+          <a class="btn pbtn" href="circles.html">Explore Circles<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft" id="includes" aria-labelledby="inc-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="inc-h">What every ZippZap includes</h2><p>Whichever ZippZap you choose, these come with it.</p></div>
+      <div class="feats">
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="3" stroke="#1F2328"/><path d="m16 10 6-3v10l-6-3" stroke="url(#zg)"/></svg></span><h3>Every kind of wish</h3><p>Video, voice, photo or written. Everyone sends theirs from their own phone.</p></div>
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3.2-3.2a4.5 4.5 0 0 0-6.4-6.4L12 5.6" stroke="#1F2328"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3.2 3.2a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" stroke="url(#zg)"/></svg></span><h3>One link for everyone</h3><p>Share it on WhatsApp, KingsChat, email or anywhere your people are.</p></div>
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="5" rx="1.5" stroke="#1F2328"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6M12 8v13" stroke="#1F2328"/><path d="M12 8S10 3 7.5 4.5 9 8 12 8zm0 0s2-5 4.5-3.5S15 8 12 8z" stroke="url(#zg)"/></svg></span><h3>Revealed on the day</h3><p>The film stays a surprise until the day you choose.</p></div>
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2.5" stroke="#1F2328"/><path d="M8 21h8M12 17v4" stroke="#1F2328"/><path d="m10 8.5 4 2-4 2z" stroke="url(#zg)"/></svg></span><h3>Any screen</h3><p>Plays on a phone, a TV or the big screen.</p></div>
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5" stroke="url(#zg)"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="#1F2328"/></svg></span><h3>Yours to keep</h3><p>Download the film and share it again whenever you like.</p></div>
+        <div class="feat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z" stroke="#1F2328"/><path d="M9 7h6M9 11h6" stroke="url(#zg)"/><path d="M9 15h3" stroke="#1F2328"/></svg></span><h3>Pay your way</h3><p>Card, bank transfer, KingsPay or Espees.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="how-h">How ZippZap works</h2><p>The same three steps, whoever you are celebrating.</p></div>
+      <ol class="steps">
+        <li class="step"><span class="dot">1</span><h3>Start a celebration</h3><p>Pick the occasion and the day the film is revealed.</p></li>
+        <li class="step"><span class="dot">2</span><h3>Invite everyone</h3><p>Share one link. Everyone adds a video, voice note, photo or message from their phone.</p></li>
+        <li class="step"><span class="dot">3</span><h3>Reveal one film</h3><p>Play it on the day, on a phone, a TV or the big screen.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="close hub" id="get" aria-labelledby="get-h">
+    <div class="confetti" aria-hidden="true">
+      <i class="sq" style="top:16%;left:62%;background:#E0457A;transform:rotate(18deg)"></i>
+      <i class="ci" style="bottom:18%;left:72%;background:#4F86F7"></i>
+      <i class="da" style="top:22%;right:4%;background:#22B07D;transform:rotate(-24deg)"></i>
+    </div>
+    <div class="wrap">
+      <div class="close-copy">
+        <h2 id="get-h">One film from everyone who cares. <span>Which ZippZap is yours?</span></h2>
+        <p>For families and friends, for workplaces, and for communities. Pick yours to see what it can do.</p>
+        <div class="choose">
+          <a class="btn btn-mom" href="moments.html">ZippZap Moments</a>
+          <a class="btn btn-blue" href="teams.html">ZippZap Teams</a>
+          <a class="btn btn-green" href="circles.html">ZippZap Circles</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="footer">
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="ZippZap. Moments move people." width="151" height="44">
+      <p>Group love, delivered perfectly. One film from everyone who cares.</p>
+    </div>
+    <div><h3>ZippZap family</h3><ul><li><a href="moments.html">Moments</a></li><li><a href="teams.html">Teams</a></li><li><a href="circles.html">Circles</a></li></ul></div>
+    <div><h3>Get started</h3><ul><li><a href="moments.html">Start with Moments</a></li><li><a href="teams.html#get">Teams early access</a></li><li><a href="circles.html#get">Circles early access</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a class="ext" href="/affiliates">Affiliate program</a></li><li><a class="ext" href="/contact">Contact us</a></li></ul></div>
+    <div><h3>Legal</h3><ul><li><a class="ext" href="/privacy">Privacy notice</a></li><li><a class="ext" href="/terms">Terms of use</a></li></ul></div>
+    <div class="legal"><span>© 2026 ZippZap</span><span>Celebrate · Share · Connect</span></div>
+  </div>
+</footer>
+<script>
+(function () {
+  var head = document.querySelector('.head'), btn = document.getElementById('menuBtn'), menu = document.getElementById('menu'), icon = document.getElementById('menuIcon');
+  function setMenu(open) { menu.hidden = !open; btn.setAttribute('aria-expanded', String(open)); btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); icon.setAttribute('d', open ? 'M6 6l12 12M18 6 6 18' : 'M4 7h16M4 12h16M4 17h16'); }
+  btn.addEventListener('click', function () { setMenu(menu.hidden); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); btn.focus(); } });
+  window.addEventListener('resize', function () { if (window.innerWidth > 960 && !menu.hidden) setMenu(false); });
+  function onScroll() { head.classList.toggle('small', window.scrollY > 24); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+</script>
+</body>
+</html>
