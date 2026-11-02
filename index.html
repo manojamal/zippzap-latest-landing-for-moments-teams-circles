@@ -372,6 +372,26 @@ p{margin:0}
 .price-note p{color:var(--muted);max-width:44em}
 .price-note b{color:var(--navy)}
 @media (max-width:960px){.vals{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- depth effects on the product page pictures (switched on by assets/js/zz-fx.js) ---- */
+.visual.depth-on{transform-style:preserve-3d}
+.visual.depth-on > .blob{translate:0 0 -60px}
+.visual.depth-on > .tv{translate:0 0 24px}
+.visual.depth-on > .phone{translate:0 0 64px}
+.visual.depth-on > .confetti{translate:0 0 90px}
+.visual.depth-on > .chip{translate:0 0 120px}
+
+/* ---- scroll by scroll (switched on by assets/js/zz-fx.js; nothing changes without it) ---- */
+.fx-steps .step:not(:last-child)::before{content:"";position:absolute;top:25px;left:64px;right:calc(-1 * var(--g) + 12px);height:2px;border-radius:1px;background:var(--line)}
+.fx-steps .step:not(:last-child)::after{opacity:1;transform-origin:left center;scale:var(--fill,0) 1}
+.fx-steps .step .dot{position:relative;z-index:1;transition:scale .35s cubic-bezier(.2,.8,.2,1),background .35s ease,color .35s ease}
+.fx-steps .step:not(.on) .dot{background:linear-gradient(var(--white),var(--white)) padding-box,linear-gradient(var(--line-strong),var(--line-strong)) border-box;color:var(--faint);scale:.86}
+.fx-steps .step.on .dot{scale:1}
+.fx-sweep h2 span{background-size:250% 100%}
+@media (max-width:640px){
+  .fx-steps .step:not(:last-child)::before{top:60px;left:25px;right:auto;bottom:-24px;width:2px;height:auto}
+  .fx-steps .step:not(:last-child)::after{transform-origin:center top;scale:1 var(--fill,0)}
+}
 /* ---- main page (ZippZap family) ---- */
 /* Neutral charcoal page. Pink, blue and green appear together as the family, or alone on the product they belong to. */
 :root{--family:linear-gradient(90deg,#D53460 0%,#1D4ED8 50%,#047857 100%);--family-lt:linear-gradient(90deg,#F27BA0 0%,#7FA8FF 50%,#4ADE9F 100%);--mom:linear-gradient(90deg,#D53460 0%,#A029A5 52%,#DD9F5D 100%);--grad:var(--family)}
@@ -420,6 +440,29 @@ p{margin:0}
 @media (max-width:1060px){.products{grid-template-columns:minmax(0,1fr);max-width:640px;margin-inline:auto}}
 @media (max-width:640px){.close .choose .btn{flex:1 1 100%}.icon-row{gap:2px}}
 @media (prefers-reduced-motion:reduce){.icon-row img{animation:none}}
+
+/* ---- 3D hero (main page) ---- */
+.hub-hero .wrap{gap:18px;padding-top:clamp(8px,1vw,20px)}
+.stage{position:relative;width:100%;height:clamp(250px,30vw,440px);margin:0 0 4px}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease}
+.stage.live canvas{opacity:1}
+.poster{position:absolute;inset:0;perspective:900px;transition:opacity .45s ease}
+.stage.live .poster{opacity:0;pointer-events:none}
+.poster .layer{position:absolute;inset:0;transform-style:preserve-3d}
+.poster .oi{position:absolute;left:var(--x);top:var(--y);width:clamp(40px,calc(var(--s) * 5.4vw),82px);height:auto;opacity:var(--o);transform:translate(-50%,-50%) translateZ(var(--z))}
+.poster .bolts{position:absolute;left:50%;top:50%;height:64%;aspect-ratio:41.38/32;transform:translate(-50%,-50%) translateZ(40px);z-index:2;filter:drop-shadow(0 18px 24px rgba(31,35,40,.18))}
+.poster .bolts img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s ease;opacity:0}
+.stage[data-tint="moments"] .b-m,.stage[data-tint="teams"] .b-t,.stage[data-tint="circles"] .b-c{opacity:1}
+.hub-hero .tag a{display:inline-block;padding:7px 1px;margin-block:-7px;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;color:var(--navy)}
+.hub-hero .tag a[data-tint="moments"]{text-decoration-color:#D53460}
+.hub-hero .tag a[data-tint="teams"]{text-decoration-color:#1D4ED8}
+.hub-hero .tag a[data-tint="circles"]{text-decoration-color:#047857}
+.hub-hero .tag a:hover{color:#000000}
+.products{perspective:1400px}
+.prod[data-tilt]{transform-style:preserve-3d}
+.prod .pics{transform-style:preserve-3d}
+@media (max-width:640px){.stage{height:clamp(230px,62vw,300px)}.poster .oi{width:clamp(36px,calc(var(--s) * 11vw),58px)}}
+@media (prefers-reduced-motion:reduce){.stage canvas{display:none}.poster{opacity:1!important}}
 
 </style>
 <meta name="description" content="Group gifting, digital greetings and milestone celebrations for individuals, teams and communities. One film from everyone who cares.">
@@ -472,16 +515,11 @@ p{margin:0}
 <main id="main">
   <section class="hub-hero" id="hero" aria-labelledby="hero-h">
     <div class="wrap">
-      <div class="icon-row" aria-hidden="true">
-        <img src="assets/icons/birthday.webp" alt="" width="72" height="72" style="--i:0">
-        <img src="assets/icons/wedding.webp" alt="" width="72" height="72" style="--i:1">
-        <img src="assets/icons/work.webp" alt="" width="72" height="72" style="--i:2">
-        <img src="assets/icons/congratulations.webp" alt="" width="72" height="72" style="--i:3">
-        <img src="assets/icons/thank-you.webp" alt="" width="72" height="72" style="--i:4">
-        <img src="assets/icons/graduation.webp" alt="" width="72" height="72" style="--i:5">
-        <img src="assets/icons/new-baby.webp" alt="" width="72" height="72" style="--i:6">
+      <div class="stage" id="stage" data-tint="moments" data-icons="assets/icons/birthday.webp,assets/icons/wedding.webp,assets/icons/work.webp,assets/icons/congratulations.webp,assets/icons/thank-you.webp,assets/icons/graduation.webp,assets/icons/new-baby.webp,assets/icons/christmas.webp" aria-hidden="true">
+        <div class="poster"><div class="layer"><img class="oi" src="assets/icons/birthday.webp" alt="" style="--x:90.0%;--y:56.0%;--s:0.93;--z:0px;--o:0.78;z-index:1"><img class="oi" src="assets/icons/wedding.webp" alt="" style="--x:78.3%;--y:74.4%;--s:1.01;--z:42px;--o:0.93;z-index:3"><img class="oi" src="assets/icons/work.webp" alt="" style="--x:50.0%;--y:82.0%;--s:1.04;--z:60px;--o:1.00;z-index:3"><img class="oi" src="assets/icons/congratulations.webp" alt="" style="--x:21.7%;--y:74.4%;--s:1.01;--z:42px;--o:0.93;z-index:3"><img class="oi" src="assets/icons/thank-you.webp" alt="" style="--x:10.0%;--y:56.0%;--s:0.93;--z:0px;--o:0.78;z-index:3"><img class="oi" src="assets/icons/graduation.webp" alt="" style="--x:21.7%;--y:37.6%;--s:0.85;--z:-42px;--o:0.62;z-index:1"><img class="oi" src="assets/icons/new-baby.webp" alt="" style="--x:50.0%;--y:30.0%;--s:0.82;--z:-60px;--o:0.55;z-index:1"><img class="oi" src="assets/icons/christmas.webp" alt="" style="--x:78.3%;--y:37.6%;--s:0.85;--z:-42px;--o:0.62;z-index:1"><span class="bolts"><img class="b-m" src="assets/logo-mark.svg" alt=""><img class="b-t" src="assets/logo-mark-teams.svg" alt=""><img class="b-c" src="assets/logo-mark-circles.svg" alt=""></span></div></div>
+        <canvas></canvas>
       </div>
-      <span class="tag"><i aria-hidden="true"></i>For families, workplaces and communities</span>
+      <span class="tag"><i aria-hidden="true"></i><span>For <a href="moments.html" data-tint="moments">families</a>, <a href="teams.html" data-tint="teams">workplaces</a> and <a href="circles.html" data-tint="circles">communities</a></span></span>
       <h1 id="hero-h">Group love, <span>delivered perfectly.</span></h1>
       <p class="lead">One film from everyone who cares. ZippZap collects video, voice, photo and written wishes and turns them into one surprise film, for families and friends, workplaces and communities.</p>
       <div class="ctas center">
@@ -495,21 +533,21 @@ p{margin:0}
     <div class="wrap">
       <div class="sec-head center"><h2 id="prod-h">Three ways to celebrate together</h2><p>The same simple idea: collect a wish from everyone, reveal one film.</p></div>
       <div class="products">
-        <article class="prod pm">
+        <article class="prod pm" data-tint="moments" data-tilt>
           <div class="ptop"><span class="pname">ZippZap <b>Moments</b></span><span class="pstat">Available now</span></div>
           <p class="pfor">For families and friends</p>
           <p class="pdesc">Birthdays, weddings, new babies and every family milestone, in one surprise film.</p>
           <div class="pics" aria-hidden="true"><img src="assets/icons/birthday.webp" alt=""><img src="assets/icons/wedding.webp" alt=""><img src="assets/icons/new-baby.webp" alt=""></div>
           <a class="btn pbtn" href="moments.html">Explore Moments<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </article>
-        <article class="prod pt">
+        <article class="prod pt" data-tint="teams" data-tilt>
           <div class="ptop"><span class="pname">ZippZap <b>Teams</b></span><span class="pstat">Early access</span></div>
           <p class="pfor">For workplaces</p>
           <p class="pdesc">Farewells, retirements, work anniversaries and team wins, from colleagues in every office.</p>
           <div class="pics" aria-hidden="true"><img src="assets/icons/work.webp" alt=""><img src="assets/icons/farewell.webp" alt=""><img src="assets/icons/retirement.webp" alt=""></div>
           <a class="btn pbtn" href="teams.html">Explore Teams<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </article>
-        <article class="prod pc">
+        <article class="prod pc" data-tint="circles" data-tilt>
           <div class="ptop"><span class="pname">ZippZap <b>Circles</b></span><span class="pstat">Early access</span></div>
           <p class="pfor">For communities</p>
           <p class="pdesc">Churches, cell groups, alumni, clubs and big families, with hundreds of members in one film.</p>
@@ -588,6 +626,22 @@ p{margin:0}
   window.addEventListener('resize', function () { if (window.innerWidth > 960 && !menu.hidden) setMenu(false); });
   function onScroll() { head.classList.toggle('small', window.scrollY > 24); }
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+</script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function load(src, done) { var s = document.createElement('script'); s.src = src; s.async = true; if (done) s.onload = done; document.head.appendChild(s); }
+  function go() {
+    var c = navigator.connection, save = c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''));
+    var weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+    load('assets/js/zz-fx.js', function () {
+      if (!document.getElementById('stage') || save || weak || location.protocol === 'file:' || !window.WebGLRenderingContext) return;
+      var three = function () { load('assets/js/zz-3d.js'); };
+      if ('requestIdleCallback' in window) requestIdleCallback(three, { timeout: 1500 }); else setTimeout(three, 600);
+    });
+  }
+  if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
 })();
 </script>
 </body>

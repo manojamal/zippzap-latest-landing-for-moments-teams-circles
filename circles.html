@@ -373,6 +373,26 @@ p{margin:0}
 .price-note b{color:var(--navy)}
 @media (max-width:960px){.vals{grid-template-columns:minmax(0,1fr)}}
 
+/* ---- depth effects on the product page pictures (switched on by assets/js/zz-fx.js) ---- */
+.visual.depth-on{transform-style:preserve-3d}
+.visual.depth-on > .blob{translate:0 0 -60px}
+.visual.depth-on > .tv{translate:0 0 24px}
+.visual.depth-on > .phone{translate:0 0 64px}
+.visual.depth-on > .confetti{translate:0 0 90px}
+.visual.depth-on > .chip{translate:0 0 120px}
+
+/* ---- scroll by scroll (switched on by assets/js/zz-fx.js; nothing changes without it) ---- */
+.fx-steps .step:not(:last-child)::before{content:"";position:absolute;top:25px;left:64px;right:calc(-1 * var(--g) + 12px);height:2px;border-radius:1px;background:var(--line)}
+.fx-steps .step:not(:last-child)::after{opacity:1;transform-origin:left center;scale:var(--fill,0) 1}
+.fx-steps .step .dot{position:relative;z-index:1;transition:scale .35s cubic-bezier(.2,.8,.2,1),background .35s ease,color .35s ease}
+.fx-steps .step:not(.on) .dot{background:linear-gradient(var(--white),var(--white)) padding-box,linear-gradient(var(--line-strong),var(--line-strong)) border-box;color:var(--faint);scale:.86}
+.fx-steps .step.on .dot{scale:1}
+.fx-sweep h2 span{background-size:250% 100%}
+@media (max-width:640px){
+  .fx-steps .step:not(:last-child)::before{top:60px;left:25px;right:auto;bottom:-24px;width:2px;height:auto}
+  .fx-steps .step:not(:last-child)::after{transform-origin:center top;scale:1 var(--fill,0)}
+}
+
 </style>
 <meta name="description" content="Churches, cell groups, alumni, clubs and big families: collect wishes from every member and turn them into one film.">
 <meta name="theme-color" content="#0E3B2E">
@@ -440,7 +460,7 @@ p{margin:0}
         <div class="fine"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hundreds of members, one film</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Share on KingsChat and WhatsApp</span></div>
       </div>
 
-      <div class="visual" role="img" aria-label="On the phone, 126 wishes for Pastor Ade’s tenth anniversary come in from nine cells. On the screen, they play as one film called Thank you, Pastor Ade.">
+      <div class="visual" data-depth role="img" aria-label="On the phone, 126 wishes for Pastor Ade’s tenth anniversary come in from nine cells. On the screen, they play as one film called Thank you, Pastor Ade.">
         <span class="blob b1"></span><span class="blob b2"></span>
         <div class="confetti" aria-hidden="true">
           <i class="sq" style="top:3%;left:30%;background:#047857;transform:rotate(18deg)"></i>
@@ -631,6 +651,22 @@ p{margin:0}
   var bar = document.getElementById('getbar'), seen = { hero: true };
   var barSpy = new IntersectionObserver(function (entries) { entries.forEach(function (en) { seen[en.target.id] = en.isIntersecting; }); bar.classList.toggle('show', !seen.hero && !seen.get && !seen.footer); });
   ['hero', 'get', 'footer'].forEach(function (id) { var el = document.getElementById(id); if (el) barSpy.observe(el); });
+})();
+</script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function load(src, done) { var s = document.createElement('script'); s.src = src; s.async = true; if (done) s.onload = done; document.head.appendChild(s); }
+  function go() {
+    var c = navigator.connection, save = c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''));
+    var weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+    load('assets/js/zz-fx.js', function () {
+      if (!document.getElementById('stage') || save || weak || location.protocol === 'file:' || !window.WebGLRenderingContext) return;
+      var three = function () { load('assets/js/zz-3d.js'); };
+      if ('requestIdleCallback' in window) requestIdleCallback(three, { timeout: 1500 }); else setTimeout(three, 600);
+    });
+  }
+  if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
 })();
 </script>
 </body>
